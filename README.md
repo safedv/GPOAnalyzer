@@ -3,19 +3,19 @@
 ![Python](https://img.shields.io/badge/python-v3.9+-blue.svg)
 ![License](https://img.shields.io/badge/license-MIT-green.svg)
 
-**GPOAnalyzer** is a tool designed for penetration testers and red teamers to assist in the analysis of domain Group Policy Objects (GPO) files, located in the SYSVOL directory.
+**GPOAnalyzer** is a tool designed for penetration testers and red teamers to assist in analyzing domain Group Policy Object (GPO) files located in the SYSVOL directory.
 
-GPOAnalyzer is valuable for quickly identifying critical information such as domain configuration, registry keys, policies, web targets, network shares, and more. Additionally, it provides easily interpretable outputs and supports data exportation in JSON format for seamless integration with complementary tools like `jq`.
+GPOAnalyzer is valuable for quickly identifying critical information such as domain configuration, registry keys, policies, web targets, network shares, and more. Additionally, it provides easily interpretable outputs and supports data export in JSON format for seamless integration with complementary tools like `jq`.
 
 # Installation
 
 ### Executable
 
-Download the executable from [release page](https://github.com/safedv/GPOAnalyzer/releases).
+Download the executable from the [release page](https://github.com/safedv/GPOAnalyzer/releases).
 
 ### Python Module
 
-Alternatively, you can install **GPOAnalyzer**, you need `Python 3.6` or higher. Clone the repository and install the required dependencies:
+Alternatively, you can install **GPOAnalyzer** using `Python 3.6` or higher. Clone the repository and install the required dependencies:
 
 ```bash
 git clone https://github.com/safedv/GPOAnalyzer.git
@@ -27,13 +27,13 @@ pip install .
 
 Run the tool from the command line using the following syntax:
 
-#### Linux
+#### Python Module
 
 ```bash
 python -m gpoanalyzer --help
 ```
 
-#### Windows
+#### Executable
 
 ```powershell
 gpoanalyzer.exe --help
