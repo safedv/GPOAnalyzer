@@ -153,7 +153,7 @@ gpo_value_paths = {
         "type": "Properties.type",
         "value": "Properties.value"
     },
-    "environmentvariables": {
+    "envvars": {
         # "clsid": "clsid",
         "name": "Properties.name",
         "status": "status",

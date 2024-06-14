@@ -20,7 +20,7 @@ FILENAMES = {
     "groups": "groups.xml",
     "printers": "printers.xml",
     "registryxml": "registry.xml",
-    "environmentvariables": "environmentvariables.xml",
+    "envvars": "environmentvariables.xml",
     "files": "files.xml",
     "services": "services.xml",
     "folders": "folders.xml",

@@ -16,52 +16,53 @@ console = Console()
 
 def parse_cmdline() -> argparse.ArgumentParser:
     """Parse command line arguments for GPO Analyzer."""
-    parser = argparse.ArgumentParser(description=(
+    parser = argparse.ArgumentParser(prog='python -m gpoanalyzer', description=(
         "GPO Analyzer parses and enumerates Domain Group Policy Object (GPO) files."))
 
     # General arguments group
     general_args = parser.add_argument_group('General Options')
     general_args.add_argument(
-        'gpopath', type=str, help='The path to the GPO data directory.')
+        'gpopath', type=str, help='Path to the GPO data directory')
 
     # Add mutually exclusive group for scan and json options
     exclusive_group = general_args.add_mutually_exclusive_group()
-    exclusive_group.add_argument("--json", '-jq', action="store_true", help=(
-        'Get data in JSON format. (Must be used with exactly one file argument.)'))
-    exclusive_group.add_argument(
-        "--find", '-f', type=str, help='Find string on all database tables.')
+    exclusive_group.add_argument("--json", '-jq',
+                                 action="store_true",
+                                 help='Output data in JSON format')
+    exclusive_group.add_argument("--find", '-f',
+                                 type=str,
+                                 help='Search for a specific string or pattern')
     general_args.add_argument(
-        '--output', '-o', type=str, help='Output to a file. Specify the file path.')
+        '--output', '-o', type=str, help='Output results to a specified file path')
 
     # Add file options
     files_args = parser.add_argument_group('Supported Files')
-
     files_args.add_argument('--shortcuts', action='store_true',
-                            help='Retrieve data about configured shortcuts from XML files.')
+                            help='Extract shortcut configurations from Shortcuts XML files')
     files_args.add_argument('--scheduledtasks', action='store_true',
-                            help='Parse Scheduled Tasks from XML configurations.')
+                            help='Extract scheduled tasks from ScheduledTasks XML files')
     files_args.add_argument('--drives', action='store_true',
-                            help='Extract mappings of network drives from XML files.')
+                            help='Extract network drive mappings from Drives XML files')
     files_args.add_argument('--groups', action='store_true',
-                            help='Get group membership settings from XML configurations.')
+                            help='Extract group membership settings from Groups XML files')
     files_args.add_argument('--printers', action='store_true',
-                            help='Retrieve printer configurations from Printers.xml.')
-    files_args.add_argument(
-        '--registryxml', action='store_true', help='Parse settings from Registry.xml.')
-    files_args.add_argument('--environmentvariables', action='store_true',
-                            help='Retrieve env variable settings from EnvironmentVariables.xml.')
+                            help='Extract printer configurations from Printers.xml')
+    files_args.add_argument('--registryxml', action='store_true',
+                            help='Extract settings from Registry.xml')
+    files_args.add_argument('--envvars', action='store_true',
+                            help='Extract env variable settings from EnvironmentVariables.xml')
     files_args.add_argument('--files', action='store_true',
-                            help='Extract file policies from Files.xml.')
+                            help='Extract file policies from Files.xml')
     files_args.add_argument('--services', action='store_true',
-                            help='Get service configuration data from Services.xml.')
+                            help='Extract service configurations from Services.xml')
     files_args.add_argument('--folders', action='store_true',
-                            help='Parse folder redirection settings from Folder.xml.')
+                            help='Extract folder settings from Folders.xml')
     files_args.add_argument('--internetsettings', action='store_true',
-                            help='Parse settings from Internet Explorer XML configurations.')
+                            help='Extract internet settings from InternetSettings XML files')
     files_args.add_argument('--registrypol', action='store_true',
-                            help='Extract registry policies from Registry.pol.')
+                            help='Extract registry settings from Registry.pol')
     files_args.add_argument('--gpttmpl', action='store_true',
-                            help='Get Group Policy Template data')
+                            help='Extract group policy template data from GptTmpl.inf files')
 
     if len(sys.argv) == 2:
         parser.print_help()

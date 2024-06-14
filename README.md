@@ -27,42 +27,52 @@ pip install .
 
 Run the tool from the command line using the following syntax:
 
+#### Linux
+
 ```bash
-python -m gpoanalyzer <gpopath> [options]
+python -m gpoanalyzer --help
 ```
+
+#### Windows
 
 ```powershell
-gpoanalyzer.exe <gpopath> [options]
+gpoanalyzer.exe --help
 ```
 
-### Mandatory Argument
+#### Output
 
-- `gpopath`: Specifies the path to the GPO data directory.
+```
+usage: python -m gpoanalyzer [-h] [--json | --find FIND] [--output OUTPUT] [--shortcuts] [--scheduledtasks] [--drives] [--groups] [--printers] [--registryxml] [--envvars] [--files] [--services]
+                             [--folders] [--internetsettings] [--registrypol] [--gpttmpl]
+                             gpopath
 
-### Module Options
+GPO Analyzer parses and enumerates Domain Group Policy Object (GPO) files.
 
-- `--json/-jq`: Get data in JSON format. (Must be used with exactly one file argument.).
-- `--find/-f TERM`: Search string or pattern on database data.
+options:
+  -h, --help            show this help message and exit
 
-### General Options
+General Options:
+  gpopath               Path to the GPO data directory
+  --json, -jq           Output data in JSON format
+  --find FIND, -f FIND  Search for a specific string or pattern
+  --output OUTPUT, -o OUTPUT
+                        Output results to a specified file path
 
-- `--output FILE`: Outputs the result to a specified file.
-
-### Analyzer Options
-
-- `-registrypol`: Parse registry settings from Registry.pol files.
-- `-shortcuts`: Retrieve shortcut configurations from XML files.
-- `-scheduledtasks`: Analyze Scheduled Tasks from XML files.
-- `-drives`: Extract network drive mappings from XML files.
-- `-groups`: Analyze group membership settings from XML files.
-- `-printers`: Retrieve printer configurations from Printers.xml..
-- `-registryxml`: Parse settings from Registry.xml files.
-- `-environmentvariables`: Retrieve environment variable settings from EnvironmentVariables.xml.
-- `-files`: Extract file policies from Files.xml.
-- `-services`: Analyze service configurations from Services.xml.
-- `-folders`: Analyze folder redirection settings from Folder.xml.
-- `-internetsettings`: Analyze settings from internet settings XML files.
-- `-gpttmpl`: Extract Group Policy Template data, including Password and Kerberos policies.
+Supported Files:
+  --shortcuts           Extract shortcut configurations from Shortcuts XML files
+  --scheduledtasks      Extract scheduled tasks from ScheduledTasks XML files
+  --drives              Extract network drive mappings from Drives XML files
+  --groups              Extract group membership settings from Groups XML files
+  --printers            Extract printer configurations from Printers.xml
+  --registryxml         Extract settings from Registry.xml
+  --envvars             Extract env variable settings from EnvironmentVariables.xml
+  --files               Extract file policies from Files.xml
+  --services            Extract service configurations from Services.xml
+  --folders             Extract folder settings from Folders.xml
+  --internetsettings    Extract internet settings from InternetSettings XML files
+  --registrypol         Extract registry settings from Registry.pol
+  --gpttmpl             Extract group policy template data from GptTmpl.inf files
+```
 
 # Examples
 
@@ -71,23 +81,13 @@ gpoanalyzer.exe <gpopath> [options]
 Search for a string in all parsed data
 
 ```bash
-λ python -m gpoanalyzer "<GPO_FILES_PATH>" --find "AdmPwd"
-
-Results
-└── ('registrypol', -3475148589812524019)
-    ├── name: <GPO_FILES_PATH>\{4080B15B-A69C-452C-8E4E-14886CF1740D}\Machine\Registry.pol
-    ├── Hive: HKLM
-    ├── Key: Software\Policies\Microsoft Services\AdmPwd
-    ├── Value: AdmPwdEnabled
-    ├── Type: REG_DWORD
-    ├── Data: 0x00000001
-    └── -------------------------------------------------------------------------------------------
+python -m gpoanalyzer "<GPO_FILES_PATH>" --find "AdmPwd"
 ```
 
 Search for a pattern in all parsed data
 
 ```bash
-λ python -m gpoanalyzer "<GPO_FILES_PATH>" --find "^(\\)(\\[\w\.-_]+){2,}(\\?)$"
+python -m gpoanalyzer "<GPO_FILES_PATH>" --find "^(\\)(\\[\w\.-_]+){2,}(\\?)$"
 ```
 
 ### Report Module
@@ -95,13 +95,13 @@ Search for a pattern in all parsed data
 Output all data to a file
 
 ```bash
-λ python -m gpoanalyzer "<GPO_FILES_PATH>" --shortcuts --drives --folders --scheduledtasks -o output.txt
+python -m gpoanalyzer "<GPO_FILES_PATH>" --shortcuts --drives --folders --scheduledtasks -o output.txt
 ```
 
 Output registry data to a file in json format:
 
 ```bash
-λ python -m gpoanalyzer "<GPO_FILES_PATH>" --registrypol --json -o registry.pol.json
+python -m gpoanalyzer "<GPO_FILES_PATH>" --registrypol --json -o registry.pol.json
 ```
 
 ### JSON Module
@@ -109,8 +109,12 @@ Output registry data to a file in json format:
 Export `targetPath` value from shortcuts XML files configuration with `jq`
 
 ```bash
-λ python -m gpoanalyzer "<GPO_FILES_PATH>" --shortcuts --json | jq '[.. | objects | select(has("targetPath")) | .targetPath]' | sort -u
+python -m gpoanalyzer "<GPO_FILES_PATH>" --shortcuts --json | jq '[.. | objects | select(has("targetPath")) | .targetPath]' | sort -u
+```
 
+#### Output
+
+```
 "http://example1.com"
 "https://example2.com"
 "http://example3.com"
